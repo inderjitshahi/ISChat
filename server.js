@@ -6,14 +6,14 @@ import { WebSocketServer } from 'ws'
 import express from 'express'
 import { useServer } from 'graphql-ws/lib/use/ws';
 import { makeExecutableSchema } from '@graphql-tools/schema'
-import { expressMiddleware } from '@apollo/server/express4'
-
+import cors from 'cors';
 
 const PORT = process.env.PORT || 5000
 
 // create express
 const app = express();
 app.use(express.json());
+app.use(cors({ origin: 'https://ischat.vercel.app/' }));
 
 const context = ({ req }) => {
   const { authorization } = req.headers

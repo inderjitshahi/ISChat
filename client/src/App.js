@@ -5,12 +5,12 @@ import HomeScreen from './pages/HomeScreen';
 import { useState } from 'react';
 
 function App() {
-  const [loggedIn,setloggedIn] = useState(localStorage.getItem('jwt')?true:false)
+  const [loggedIn, setloggedIn] = useState(localStorage.getItem('jwt') ? true : false)
 
   return (
     <>
       {
-        loggedIn? <HomeScreen setloggedIn={setloggedIn} />:<AuthScreen setloggedIn={setloggedIn} />
+        loggedIn ? <HomeScreen setloggedIn={setloggedIn} /> : <AuthScreen setloggedIn={setloggedIn} />
       }
     </>
   );

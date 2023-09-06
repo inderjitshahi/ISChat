@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react'
 import { Box, Stack, Typography, Button, TextField, Card, CircularProgress, Alert } from '@mui/material'
 import { useMutation } from '@apollo/client'
 import { SIGNUP_USER, LOGIN_USER } from '../graphql/mutations';
-
+import { useApolloClient } from '@apollo/client';
 /*
 you use the gql function to parse the mutation string into a GraphQL document that you then pass to useMutation.
 When your component renders, useMutation returns a tuple that includes:
@@ -19,10 +19,11 @@ const AuthScreen = ({ setloggedIn }) => {
   const [signupUser, { data: signupData, loading: l1, error: e1 }] = useMutation(SIGNUP_USER)
   const [loginUser, { data: loginData, loading: l2, error: e2 }] = useMutation(LOGIN_USER, {
     onCompleted(data) {
+      // console.log(data.signinUser.token);
       localStorage.setItem("jwt", data.signinUser.token)
-      setloggedIn(true)
+      setloggedIn(true);
     }
-  })
+  });
 
 
   if (l1 || l2) {
@@ -121,11 +122,13 @@ const AuthScreen = ({ setloggedIn }) => {
             onChange={handleChange}
             required
           />
-          <Typography textAlign="center" variant="subtitle1" onClick={() => {
-            setShowLogin((preValue) => !preValue)
-            setFormData({})
-            authForm.current.reset()
-          }}> {showLogin ? "Signup?" : "Login?"}</Typography>
+          <Typography textAlign="center" variant="subtitle1"
+            style={{ cursor: 'pointer' }}
+            onClick={() => {
+              setShowLogin((preValue) => !preValue)
+              setFormData({})
+              authForm.current.reset()
+            }}> {showLogin ? "Signup?" : "Login?"}</Typography>
           <Button variant="outlined" type="submit">{showLogin ? "Login" : "Signup"}</Button>
         </Stack>
       </Card>

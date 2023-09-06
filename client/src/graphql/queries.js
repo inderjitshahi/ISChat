@@ -11,7 +11,7 @@ query getAllUsers {
   }  
 `
 export const GET_MSG = gql`
-query MessagesByUser($receiverId: Int!) {
+query MessagesByUser($receiverId: String!) {
     messagesByUser(receiverId: $receiverId) {
       id
       text

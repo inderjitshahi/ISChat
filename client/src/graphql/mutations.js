@@ -20,7 +20,7 @@ mutation SigninUser($userSignin: UserSigninInput!) {
 `
 
 export const SEND_MSG = gql`
-  mutation CreateMessage($receiverId: Int!, $text: String!) {
+  mutation CreateMessage($receiverId: String!, $text: String!) {
     createMessage(receiverId: $receiverId, text: $text) {
       id
       text
