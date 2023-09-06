@@ -28,7 +28,7 @@ const authLink = setContext((_, { headers }) => {
   }
 });
 
-
+// uri: 'http://localhost:50 00/graphql'
 //for additional headers,tokens, and http related settings
 const httpLink = new HttpLink({
   uri: 'https://ischat.onrender.com/graphql'

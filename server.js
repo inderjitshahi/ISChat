@@ -29,7 +29,7 @@ const apolloServer = new ApolloServer({ schema, context });
 
 // apply middleware
 await apolloServer.start();
-app.use('/graphql', expressMiddleware(apolloServer));
+apolloServer.applyMiddleware({ app,path:"/graphql" });
 
 
 const server = app.listen(PORT, () => {
