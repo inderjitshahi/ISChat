@@ -13,12 +13,13 @@ import env from 'dotenv';
 env.config();
 const PORT = process.env.PORT || 5000
 
-const URI = process.env.NODE_ENV == "prod" ? process.env.API_URI : "http://localhost:3000";
+const URI = process.env.NODE_ENV == "dev" ? "http://localhost:3000": process.env.API_URI ;
 
 // create express
 const app = express();
 app.use(express.json());
-app.use(cors({ origin: URI }));
+
+// app.use(cors({ origin: URI }));
 
 const context = ({ req }) => {
   const { authorization } = req.headers
