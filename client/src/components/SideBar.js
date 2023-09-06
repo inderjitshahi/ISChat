@@ -37,7 +37,7 @@ const SideBar = ({ setloggedIn }) => {
 
             <Divider />
             {
-                data.users.map(item => {
+                data?.users.map(item => {
                     return <UserCard key={item.id} item={item} />
                 })
             }

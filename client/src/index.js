@@ -17,8 +17,7 @@ import { getMainDefinition } from '@apollo/client/utilities';
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import { createClient } from 'graphql-ws';
 
-
-//adding authorization header to request before sending to server
+// Adding authorization header to request before sending to the server
 const authLink = setContext((_, { headers }) => {
   return {
     headers: {
@@ -28,17 +27,29 @@ const authLink = setContext((_, { headers }) => {
   }
 });
 
-//for additional headers,tokens, and http related settings
+// Define URIs for different environments
+let httpUri, wsUri;
+
+if (process.env.REACT_APP_ENV === "dev") {
+  console.log("Development Environment");
+  httpUri = 'http://localhost:5000/graphql';
+  wsUri = 'ws://localhost:5000/graphql';
+} else if (process.env.REACT_APP_ENV === "prod") {
+  console.log("Production Environment");
+  httpUri = 'https://ischat.onrender.com/graphql';
+  wsUri = 'wss://ischat.onrender.com/graphql';
+}
+
+// Create HTTP and WebSocket links
 const httpLink = new HttpLink({
-  uri: 'https://ischat.onrender.com/graphql'
-  // uri: 'http://localhost:5000/graphql'
+  uri: httpUri,
 });
 
 const wsLink = new GraphQLWsLink(createClient({
-  url: 'wss://ischat.onrender.com/graphql',
-  // url: 'ws://localhost:5000/graphql',
+  url: wsUri,
 }));
 
+// Split link for handling subscriptions
 const splitLink = split(
   ({ query }) => {
     const definition = getMainDefinition(query);
@@ -51,14 +62,13 @@ const splitLink = split(
   authLink.concat(httpLink),
 );
 
-
-
+// Create Apollo Client
 const client = new ApolloClient({
   link: splitLink,
   cache: new InMemoryCache()
 });
 
-
+// Render the app with Apollo Client Provider
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>

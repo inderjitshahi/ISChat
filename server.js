@@ -7,13 +7,18 @@ import express from 'express'
 import { useServer } from 'graphql-ws/lib/use/ws';
 import { makeExecutableSchema } from '@graphql-tools/schema'
 import cors from 'cors';
+import env from 'dotenv';
 
+
+env.config();
 const PORT = process.env.PORT || 5000
+
+const URI = process.env.NODE_ENV == "prod" ? process.env.API_URI : "http://localhost:3000";
 
 // create express
 const app = express();
 app.use(express.json());
-app.use(cors({ origin: 'https://ischat.vercel.app/' }));
+app.use(cors({ origin: URI }));
 
 const context = ({ req }) => {
   const { authorization } = req.headers
@@ -29,7 +34,7 @@ const apolloServer = new ApolloServer({ schema, context });
 
 // apply middleware
 await apolloServer.start();
-apolloServer.applyMiddleware({ app,path:"/graphql" });
+apolloServer.applyMiddleware({ app, path: "/graphql" });
 
 
 const server = app.listen(PORT, () => {
