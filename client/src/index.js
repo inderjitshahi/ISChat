@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {BrowserRouter} from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
 import {
   ApolloClient,
   InMemoryCache,
@@ -23,7 +23,7 @@ const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
-      authorization: localStorage.getItem('jwt')|| "" ,
+      authorization: localStorage.getItem('jwt') || "",
     }
   }
 });
@@ -61,9 +61,9 @@ const client = new ApolloClient({
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-    <ApolloProvider client={client}>
-       <App />
-    </ApolloProvider>
+      <ApolloProvider client={client}>
+        <App />
+      </ApolloProvider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')

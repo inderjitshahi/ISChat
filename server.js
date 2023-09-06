@@ -13,6 +13,7 @@ const PORT = process.env.PORT || 5000
 
 // create express
 const app = express();
+app.use(express.json());
 
 const context = ({ req }) => {
   const { authorization } = req.headers
